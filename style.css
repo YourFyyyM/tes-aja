@@ -1,0 +1,239 @@
+:root{
+  --primary: #fff;
+  --bg-color: #F9AFAF;
+  --bg-envelope-color: #d3d3d3;
+  --envelope-tab: #d3d3d3;
+  --envelope-cover: #E5E4E2;
+  --shadow-color: #0000003a;
+  --txt-color: #444;
+  --heart-color: rgb(255, 255, 255);
+}
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.container > .envelope-wrapper {
+  background: var(--bg-envelope-color);
+  box-shadow: 0 0 40px var(--shadow-color);
+  position: relative;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+.envelope-wrapper > .envelope {
+  position: relative;
+  width: 350px;
+  height: 100px;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+.envelope-wrapper > .envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  border-top: 130px solid var(--envelope-tab);
+  border-right: 175px solid transparent;
+  border-left: 175px solid transparent;
+  transform-origin: top;
+  transition: all 0.5s ease-in-out 0.7s;
+}
+.envelope-wrapper > .envelope::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 0px;
+  height: 0px;
+  border-top: 130px solid transparent;
+  border-right: 178px solid var(--envelope-cover);
+  border-bottom: 183px solid var(--envelope-cover);
+  border-left: 175px solid var(--envelope-cover);
+}
+.envelope > .letter {
+  position: absolute;
+  right: 17%;
+  bottom: 0;
+  width: 60%;
+  height: 57%;
+  background: var(--primary);
+  background-color: #ffffff;
+  text-align: center;
+ transition: all 0.5s ease-in-out;
+  box-shadow: 0 0 5px var(--shadow-color);
+  padding: 20px 10px;
+}
+
+.envelope > .letter > .text {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: var(--txt-color);
+  background-color: #fff;
+  text-align: left;
+  font-size: 10px;
+}
+.heart {
+  position: relative;
+  top: -175px;
+  left: 160px;
+  width: 30px;
+  height: 30px;
+  background: var(--heart-color);
+  z-index: 4;
+  transform: rotate(45deg);
+  transition: transform 0.5s ease-in-out 1s;
+  box-shadow: 0 1px 6px var(--shadow-color);
+  cursor: pointer;
+   animation: pulse 1s ease-in-out infinite;
+}
+.heart:before, 
+.heart:after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: var(--heart-color);
+  border-radius: 50%;
+}
+.heart:before {
+  top: -17.5px;
+}
+.heart:after {
+  right: 17.5px;
+}
+.flap > .envelope:before {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+.flap > .envelope > .letter {
+  bottom: 100px;
+  transform: scale(1.5);
+  transition-delay: 1s;
+  cursor: pointer;
+   animation: float 2s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+.flap > .heart {
+  transform: rotate(90deg);
+  transition-delay: 0.4s;
+  animation: none;
+}
+@keyframes pulse {
+  0% { transform: rotate(45deg) scale(1); }
+  50% { transform: rotate(45deg) scale(1.1); }
+  100% { transform: rotate(45deg) scale(1); }
+}
+.envelope-shadow {
+  position: relative;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  width: 0;
+  height: 40px;
+  border-left: 177px solid transparent;
+  border-right: 177px solid transparent;
+  border-top:165px solid #d3d3d3; /* warna lebih gelap buat efek 3D */
+  z-index: 3; /* biar di belakang isi amplop */
+}
+/* Kode Baru: Styling untuk letter-heart (hilang di kode kamu) */
+.letter-heart {
+  position: absolute;
+  bottom: 10px;
+  left: 90%;
+  transform: translate(-50%, -20%) rotate(-45deg);
+  width: 15px;
+  height: 15px;
+  background: #ff0000;
+  box-shadow: 0 1px 4px var(--shadow-color);
+}
+.letter-heart:before,
+.letter-heart:after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: #ff0000;
+  border-radius: 50%;
+}
+.letter-heart:before {
+  top: -5px;
+  left: 0;
+}
+.letter-heart:after {
+  top: 0;
+  left: 5px;
+}
+/* Kode Baru: Styling untuk surat saat amplop menghilang */
+.letter-only {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--shadow-color);
+  padding: 20px;
+  z-index: 10;
+  transition: all 0.5s ease-in-out;
+   animation: fadeIn 0.5s ease-in-out;
+    animation: none;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.letter-only > .text {
+  font-size: 20px; /* Lebih besar untuk keterbacaan */
+}
+.letter-only > .letter-heart {
+  bottom: 10px;
+  left: 90%;
+}
+.music-control {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background: var(--primary);
+  border: 1px solid var(--shadow-color);
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: var(--txt-color);
+  z-index: 20;
+  transition: opacity 0.3s ease-in-out;
+}
+@keyframes float {
+  0% { transform: scale(1.5) translateY(0); }
+  50% { transform: scale(1.5) translateY(-2px); }
+  100% { transform: scale(1.5) translateY(0); }
+
+}
+@media only screen and (max-width: 600px) {
+  .letter-only {
+    width: 90%; /* Beri margin kecil di sisi */
+    max-width: 300px; /* Batasi lebar untuk HP */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
